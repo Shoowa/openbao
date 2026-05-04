@@ -60,6 +60,17 @@ func HttpJsonResponse(t *testing.T, r *http.Response, out any) {
 	}
 }
 
+func HttpHeadersEqual(t *testing.T, r *http.Response, expectedHeaders map[string]string) {
+	t.Helper()
+
+	for k, expected := range expectedHeaders {
+		actual := r.Header.Get(k)
+		if expected != actual {
+			t.Errorf("actual HTTP header: %s\nexpected HTTP header: %s", actual, expected)
+		}
+	}
+}
+
 // changeHttpStatusToMatchError will change the HTTP Status associated with
 // errors. This private test func is written to leverage the errors.Is() and
 // errors.As() methods that became available in the STDLIB 9/2019, and avoid
