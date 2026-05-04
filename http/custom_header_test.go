@@ -63,70 +63,70 @@ func TestCustomResponseHeaders(t *testing.T) {
 	TestServerAuth(t, addr, token)
 
 	resp := testHttpGet(t, token, addr+"/v1/sys/raw/")
-	testResponseStatus(t, resp, 404)
+	assert.HttpStatusEqual(t, resp, 404)
 	assert.HttpHeadersEqual(t, resp, defaultCustomHeaders)
 	assert.HttpHeadersEqual(t, resp, customHeader4xx)
 
 	resp = testHttpGet(t, token, addr+"/v1/sys/seal")
-	testResponseStatus(t, resp, 405)
+	assert.HttpStatusEqual(t, resp, 405)
 	assert.HttpHeadersEqual(t, resp, defaultCustomHeaders)
 	assert.HttpHeadersEqual(t, resp, customHeader4xx)
 	assert.HttpHeadersEqual(t, resp, customHeader405)
 
 	resp = testHttpGet(t, token, addr+"/v1/sys/leader")
-	testResponseStatus(t, resp, 200)
+	assert.HttpStatusEqual(t, resp, 200)
 	assert.HttpHeadersEqual(t, resp, customHeader200)
 
 	resp = testHttpGet(t, token, addr+"/v1/sys/health")
-	testResponseStatus(t, resp, 200)
+	assert.HttpStatusEqual(t, resp, 200)
 	assert.HttpHeadersEqual(t, resp, customHeader200)
 
 	resp = testHttpGet(t, token, addr+"/v1/sys/generate-root/attempt")
-	testResponseStatus(t, resp, 200)
+	assert.HttpStatusEqual(t, resp, 200)
 	assert.HttpHeadersEqual(t, resp, customHeader200)
 
 	resp = testHttpGet(t, token, addr+"/v1/sys/generate-root/update")
-	testResponseStatus(t, resp, 400)
+	assert.HttpStatusEqual(t, resp, 400)
 	assert.HttpHeadersEqual(t, resp, defaultCustomHeaders)
 	assert.HttpHeadersEqual(t, resp, customHeader4xx)
 	assert.HttpHeadersEqual(t, resp, customHeader400)
 
 	resp = testHttpGet(t, token, addr+"/v1/sys/")
-	testResponseStatus(t, resp, 404)
+	assert.HttpStatusEqual(t, resp, 404)
 	assert.HttpHeadersEqual(t, resp, defaultCustomHeaders)
 	assert.HttpHeadersEqual(t, resp, customHeader4xx)
 
 	resp = testHttpGet(t, token, addr+"/v1/sys")
-	testResponseStatus(t, resp, 404)
+	assert.HttpStatusEqual(t, resp, 404)
 	assert.HttpHeadersEqual(t, resp, defaultCustomHeaders)
 	assert.HttpHeadersEqual(t, resp, customHeader4xx)
 
 	resp = testHttpGet(t, token, addr+"/v1/")
-	testResponseStatus(t, resp, 404)
+	assert.HttpStatusEqual(t, resp, 404)
 	assert.HttpHeadersEqual(t, resp, defaultCustomHeaders)
 	assert.HttpHeadersEqual(t, resp, customHeader4xx)
 
 	resp = testHttpGet(t, token, addr+"/v1")
-	testResponseStatus(t, resp, 404)
+	assert.HttpStatusEqual(t, resp, 404)
 	assert.HttpHeadersEqual(t, resp, defaultCustomHeaders)
 	assert.HttpHeadersEqual(t, resp, customHeader4xx)
 
 	resp = testHttpGet(t, token, addr+"/")
-	testResponseStatus(t, resp, 200)
+	assert.HttpStatusEqual(t, resp, 200)
 	assert.HttpHeadersEqual(t, resp, customHeader200)
 
 	resp = testHttpGet(t, token, addr+"/ui")
-	testResponseStatus(t, resp, 200)
+	assert.HttpStatusEqual(t, resp, 200)
 	assert.HttpHeadersEqual(t, resp, customHeader200)
 
 	resp = testHttpGet(t, token, addr+"/ui/")
-	testResponseStatus(t, resp, 200)
+	assert.HttpStatusEqual(t, resp, 200)
 	assert.HttpHeadersEqual(t, resp, customHeader200)
 
 	resp = testHttpPost(t, token, addr+"/v1/sys/auth/foo", map[string]interface{}{
 		"type":        "noop",
 		"description": "foo",
 	})
-	testResponseStatus(t, resp, 204)
+	assert.HttpStatusEqual(t, resp, 204)
 	assert.HttpHeadersEqual(t, resp, customHeader2xx)
 }
