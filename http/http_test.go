@@ -16,7 +16,7 @@ import (
 	"testing"
 	"time"
 
-	cleanhttp "github.com/hashicorp/go-cleanhttp"
+	"github.com/openbao/openbao/internal/assert"
 	"github.com/openbao/openbao/sdk/v2/helper/consts"
 	"github.com/openbao/openbao/sdk/v2/helper/jsonutil"
 )
@@ -85,7 +85,7 @@ func testHttpData(t *testing.T, method string, token string, addr string, body i
 		req.Header.Set(consts.AuthHeaderName, token)
 	}
 
-	client := cleanhttp.DefaultClient()
+	client := assert.DefaultClient()
 	client.Timeout = 60 * time.Second
 
 	// From https://github.com/michiwend/gomusicbrainz/pull/4/files
